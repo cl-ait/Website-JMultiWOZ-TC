@@ -268,6 +268,34 @@
     </section>
     <!-- End paper abstract -->
 
+    <!-- Problem Statement -->
+    <section class="hero is-small">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <h2 class="title is-3 has-text-centered">研究背景</h2>
+          <div class="content has-text-justified">
+            <h3 class="title is-4">AIエージェントとツール呼び出し</h3>
+            <p>
+              近年、大規模言語モデル（LLM）を中核とするAIエージェントの活用が広がっている。AIエージェントは環境に応じて推論・意思決定を行い、自立的に行動して目的を達成するためのソフトウェアであり、計画立案、必要な外部ツールの呼び出し、内省による次の行動への反映、対話全体に関する情報の記憶と活用といった能力が求められる。
+              本稿では、日本語環境においてLLMが目的達成に必要な外部ツールを適切に呼び出せるかを評価するためのデータセットを構築する。例として、対話の𝑡ターン目のユーザ発話「wifiが使えるところで」に対して、LLMが
+              <em>Search_hotel</em> というツールを呼び出すケースを想定する。
+            </p>
+            <ol>
+              <li>マルチドメインのタスク指向型対話データセットである JMultiWOZ を、AI エージェントのツール呼び出し評価に適した形に再構成した JMultiWOZ-TC を構築。</li>
+              <li>JMultiWOZ-TC を用いて、既存の LLM におけるツール呼び出しの生成精度を評価。</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+
+
+
+
+
 
     <footer class="footer">
       <div class="container">
