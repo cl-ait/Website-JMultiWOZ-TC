@@ -310,17 +310,11 @@
           <h2 class="title is-3 has-text-centered">ツール呼び出し評価データの要件</h2>
           <div class="content has-text-justified">
             <p>
-              図 2 に本研究で取り組む (1) ツール呼び出し評価データ JMultiWOZ-TC の構築と、(2) LLM のツール呼び出し生成の評価の概要を示す。本節では LLM
-              のツール呼び出し生成の評価データの要件を整理した上で、次節で JMultiWOZ-TC の形式を説明する。
+              図 2 に本研究で取り組む (1) ツール呼び出し評価データ JMultiWOZ-TC の構築と、(2) LLM のツール呼び出し生成の評価の概要を示す。
             </p>
             <p>
               LLM のツール呼び出し生成の評価では {対話履歴、ツール呼び出し履歴、ユーザからの指示} を LLM に入力し、適切なツール呼び出しを生成できるかどうかを評価する。したがって、AI
               エージェントのツール呼び出しの評価データは、各ユーザ発話で呼び出すべきツールとその引数が定義されている必要がある（図 2 の (2)）。
-            </p>
-            <p>
-              JMultiWOZ には、ユーザ発話とシステム発話に加えて、検索や予約など、各システム発話においてシステムが実行した操作に関する情報が付与されている。しかし、JMultiWOZ は AI
-              エージェントのツール呼び出しを意図して作られたデータセットではないため、そのままの形式ではツール呼び出しの評価には使用できない。次節では、AI エージェントのツール呼び出し生成を評価するための
-              JMultiWOZ-TC の構築方法について説明する。
             </p>
             <figure class="image" style="margin-top: 0.75rem;">
               <img src="static/images/fig2.jpg" alt="図2：JMultiWOZ-TC の構築と LLM のツール呼び出し生成の評価の概要">
@@ -340,7 +334,9 @@
           <h2 class="title is-3 has-text-centered">JMultiWOZ-TC への変換</h2>
           <div class="content has-text-justified">
             <p>
-              JMultiWOZ からツール呼び出し評価データ JMultiWOZ-TC を再構成した際の変更点を説明する。
+              JMultiWOZ には、ユーザ発話とシステム発話に加えて、検索や予約など、各システム発話においてシステムが実行した操作に関する情報が付与されている。しかし、JMultiWOZ は AI
+              エージェントのツール呼び出しを意図して作られたデータセットではないため、そのままの形式ではツール呼び出しの評価には使用できない。
+              そのため、JMultiWOZ からツール呼び出し評価データ JMultiWOZ-TC を再構成した際の変更点を説明する。
             </p>
 
             <h3 class="title is-4" style="margin-top: 0.75rem;">ユーザ発話とツール呼び出しの対応の明確化</h3>
