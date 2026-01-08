@@ -303,7 +303,110 @@
       </div>
     </section>
 
+    <!-- ツール呼び出し評価データの要件 -->
+    <section class="hero is-small">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <h2 class="title is-3 has-text-centered">ツール呼び出し評価データの要件</h2>
+          <div class="content has-text-justified">
+            <p>
+              図 2 に本研究で取り組む (1) ツール呼び出し評価データ JMultiWOZ-TC の構築と、(2) LLM のツール呼び出し生成の評価の概要を示す。本節では LLM
+              のツール呼び出し生成の評価データの要件を整理した上で、次節で JMultiWOZ-TC の形式を説明する。
+            </p>
+            <p>
+              LLM のツール呼び出し生成の評価では {対話履歴、ツール呼び出し履歴、ユーザからの指示} を LLM に入力し、適切なツール呼び出しを生成できるかどうかを評価する。したがって、AI
+              エージェントのツール呼び出しの評価データは、各ユーザ発話で呼び出すべきツールとその引数が定義されている必要がある（図 2 の (2)）。
+            </p>
+            <p>
+              JMultiWOZ には、ユーザ発話とシステム発話に加えて、検索や予約など、各システム発話においてシステムが実行した操作に関する情報が付与されている。しかし、JMultiWOZ は AI
+              エージェントのツール呼び出しを意図して作られたデータセットではないため、そのままの形式ではツール呼び出しの評価には使用できない。次節では、AI エージェントのツール呼び出し生成を評価するための
+              JMultiWOZ-TC の構築方法について説明する。
+            </p>
+            <figure class="image" style="margin-top: 0.75rem;">
+              <img src="static/images/fig2.jpg" alt="図2：JMultiWOZ-TC の構築と LLM のツール呼び出し生成の評価の概要">
+              <figcaption class="has-text-centered" style="margin-top: 0.5rem; font-size: 0.95rem;">
+                図 2 ツール呼び出し評価データである JMultiWOZ-TC の構築と、LLM のツール呼び出し生成の評価の概要。
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <!-- JMultiWOZ-TC への変換 -->
+    <section class="hero is-small">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <h2 class="title is-3 has-text-centered">JMultiWOZ-TC への変換</h2>
+          <div class="content has-text-justified">
+            <p>
+              JMultiWOZ からツール呼び出し評価データ JMultiWOZ-TC を再構成した際の変更点を説明する。
+            </p>
+
+            <h3 class="title is-4" style="margin-top: 0.75rem;">ユーザ発話とツール呼び出しの対応の明確化</h3>
+            <p>
+              JMultiWOZ では、すべてのシステム発話に検索や予約などの実行結果が付与されている。これらの実行結果は、過去のユーザ発話で実行された検索や予約結果がその後のシステム発話に累積する形で記述される。例えば図 2
+              の (1) の例では USR4 でタクシー予約を実行しているが、仮に USR1〜USR3 のいずれかでレストラン検索が実行されていた場合には、「SYS4
+              の検索・予約情報」にはタクシー予約だけでなくレストラン検索に関する情報も含まれる。そのため、現在のユーザ発話に対応するツール呼び出しが明確でなかった。そこで我々は、対話履歴と検索・予約結果の変化を解析し、「対話履歴」「ツール呼び出し履歴」「ユーザ発話」「ツール呼び出し」の組を整備した。なお、ひとつのユーザ発話に対して複数のツールを実行する必要がある場合には、対応する複数のツールを付与した。
+            </p>
+
+            <h3 class="title is-4" style="margin-top: 0.75rem;">ツール一覧の整備</h3>
+            <p>
+              JMultiWOZ には宿泊施設の検索や予約、タクシーの予約などの対話とシステム操作が収録されている。JMultiWOZ-TC では、JMultiWOZ におけるシステム操作を、表 1 に示す 9
+              種類のツール呼び出しとして整理した。ツール説明の記述形式は BFCL の形式に準拠し、変数の候補が有限なものはツール説明に記述した。
+            </p>
+            <p class="has-text-centered" style="margin-top: 0.5rem; font-weight: 600;">表 1 JMultiWOZ に基づき定義したツール一覧</p>
+            <table class="table is-fullwidth is-striped is-hoverable is-narrow">
+              <thead>
+                <tr>
+                  <th>ツール名</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>Search_restaurant</code></td>
+                </tr>
+                <tr>
+                  <td><code>Search_hotel</code></td>
+                </tr>
+                <tr>
+                  <td><code>Search_attraction</code></td>
+                </tr>
+                <tr>
+                  <td><code>Search_shopping</code></td>
+                </tr>
+                <tr>
+                  <td><code>Search_taxi</code></td>
+                </tr>
+                <tr>
+                  <td><code>Search_weather</code></td>
+                </tr>
+                <tr>
+                  <td><code>booking_restaurant</code></td>
+                </tr>
+                <tr>
+                  <td><code>booking_hotel</code></td>
+                </tr>
+                <tr>
+                  <td><code>booking_taxi</code></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3 class="title is-4" style="margin-top: 0.75rem;">時刻などの記述形式の変更</h3>
+            <p>
+              JMultiWOZ の時刻の記述は “10:40” のように文字列で表現されており、評価時に解釈の曖昧さが生じる。JMultiWOZ-TC
+              では、時刻を時と分に分解して数値化することで評価の厳密性を高めた。日付についても月と日に分解するなど同様の処理を施した。
+            </p>
+
+            <p>
+              以上の変換により、4,246 対話に含まれるユーザ発話 31,303 発話に対して、合計 16,510
+              個のツール呼び出しの評価データを構築した。ユーザ発話によってはツールが呼び出されない場合や、複数のツールが呼び出される場合もある。各ユーザ発話に対する呼び出しツール数は平均 0.53 個となった。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
 
 
